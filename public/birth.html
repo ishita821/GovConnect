@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Birth Certificate</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Birth Certificate Application</h1>
+
+<div class="form-box">
+
+<form action="/apply" method="POST" enctype="multipart/form-data">
+
+<label>Full Name</label><br>
+<input type="text" name="fullname" required><br><br>
+
+<label>Aadhaar Number</label><br>
+<input type="text" name="aadhaar" required><br><br>
+
+<label>Mobile Number</label><br>
+<input type="text" name="mobile" required><br><br>
+
+<label>Date of Birth</label><br>
+<input type="date" name="dob" required><br><br>
+
+<label>Address</label><br>
+<textarea name="address" required></textarea><br><br>
+
+<input type="hidden" name="service" value="Birth Certificate">
+
+<label>Upload Document</label><br>
+<input type="file" name="document" required><br><br>
+
+<button type="submit">Submit Application</button>
+
+
+</form>
+
+
+</div>
+
+</body>
+</html>

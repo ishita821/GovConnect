@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>admin Dashboard</title>
+         <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+
+<img src="image/logo.jpg" alt="GovConnect Logo" width="80">
+
+<h1>GovConnect</h1>
+
+<h3>Government Certificate & Brokerage Service Platform</h3>
+
+</header>
+
+<hr>
+<h2>Admin Dashboard</h2>
+<p>
+    Welcome, Administrator.
+    Manage certificate application and monitor platform activities.
+</p>
+<h2>Platform Statistics</h2>
+<div class="admin-box">
+    Total Applications: <span id="total">0</span>
+</div>
+
+<div class="admin-box">
+    Pending Applications: <span id="pending">0</span>
+</div>
+
+<div class="admin-box">
+    Approved Applications: <span id="approved">0</span>
+</div>
+
+<div class="admin-box">
+    Rejected Applications: <span id="rejected">0</span>
+</div>
+
+<script>
+fetch("/admin/stats")
+    .then(response => response.json())
+    .then(stats => {
+        document.getElementById("total").textContent = stats.total;
+        document.getElementById("pending").textContent = stats.pending;
+        document.getElementById("approved").textContent = stats.approved;
+        document.getElementById("rejected").textContent = stats.rejected;
+    })
+    .catch(error => {
+        console.log(error);
+    });
+</script>
+
+<h2>Admin Functions</h2>
+
+<ul>
+
+<li>View User Applications</li>
+
+<li>Approve Applications</li>
+
+<li>Reject Applications</li>
+
+<li>Update Application Status</li>
+
+<li>Manage Government Services</li>
+
+<li>View Registered Users</li>
+
+<li>Manage Brokerage Agents</li>
+
+<li>Generate Reports</li>
+
+</ul>
+
+<hr>
+<a href="/admin/applications">
+    <button type="button">View Applications</button>
+</a>
+
+<button>Manage Users</button>
+
+<a href="/admin/applications">
+    <button type="button">Update Status</button>
+</a>
+
+<button>Manage Services</button>
+<a href="index.html">
+<button>Logout</button>
+</a>
+
+<hr>
+<h2>Recent Activities</h2>
+<h2>Applications</h2>
+
+<div id="applications"></div>
+
+<script>
+fetch("/admin/applications")
+    .then(response => response.json())
+    .then(applications => {
+        const container = document.getElementById("applications");
+
+        if (applications.length === 0) {
+            container.innerHTML = "<p>No applications found.</p>";
+            return;
+        }
+
+        applications.forEach(app => {
+            container.innerHTML += `
+                <div class="admin-box">
+                    <h3>${app.service}</h3>
+                    <p><b>Name:</b> ${app.fullname}</p>
+                    <p><b>Mobile:</b> ${app.mobile}</p>
+                    <p><b>Status:</b> ${app.status}</p>
+                    ${app.documents ? `
+    <p>
+        <a href="/uploads/${app.documents}" target="_blank">
+            <button type="button">View Document</button>
+        </a>
+    </p>
+` : ""}
+
+                    <button onclick="updateStatus('${app._id}', 'Approved')">
+                        Approve
+                    </button>
+
+                    <button onclick="updateStatus('${app._id}', 'Rejected')">
+                        Reject
+                    </button>
+                </div>
+            `;
+        });
+    });
+
+function updateStatus(id, status) {
+    fetch("/admin/update-status", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            id: id,
+            status: status
+        })
+    })
+    .then(response => response.text())
+    .then(message => {
+        alert(message);
+        location.reload();
+    });
+}
+</script>
+
+<p>✔ New Birth Certificate Application Received</p>
+
+<p>✔ Income Certificate Approved</p>
+
+<p>✔ Domicile Certificate Under Verification</p>
+
+<p>✔ New User Registration Completed</p>
+
+<hr>
+<hr>
+
+<footer>
+
+<p>GovConnect</p>
+
+<p>Government Certificate & Brokerage Service Platform</p>
+
+<p>Email: support@govconnect.com</p>
+
+<p>Phone: +91 9876543210</p>
+
+<p>© 2026 All Rights Reserved.</p>
+
+</footer>
+
+    </body>
+</html>

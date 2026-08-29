@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>My Applications</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1>My Applications</h1>
+
+<div id="applications"></div>
+
+<script>
+
+fetch("/my-applications")
+    .then(response => response.json())
+    .then(applications => {
+
+        const container = document.getElementById("applications");
+
+        if (applications.length === 0) {
+            container.innerHTML = "<p>No applications found.</p>";
+            return;
+        }
+
+        applications.forEach(app => {
+
+            container.innerHTML += `
+                <div class="admin-box">
+
+                    <h3>${app.service}</h3>
+
+                    <p><b>Name:</b> ${app.fullname}</p>
+
+                    <p><b>Mobile:</b> ${app.mobile}</p>
+
+                    <p><b>Address:</b> ${app.address}</p>
+
+                    <p><b>Status:</b> ${app.status}</p>
+
+                    <p><b>Applied On:</b>
+                    ${new Date(app.appliedOn).toLocaleDateString()}</p>
+
+                </div>
+                <br>
+            `;
+        });
+
+    })
+    .catch(error => {
+        console.log(error);
+        document.getElementById("applications").innerHTML =
+            "<p>Error loading applications.</p>";
+    });
+
+</script>
+
+</body>
+</html>

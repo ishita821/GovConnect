@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>PAN / Aadhaar Assistance</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+<h1>GovConnect</h1>
+<h2>PAN / Aadhaar Assistance</h2>
+
+</header>
+
+<hr>
+
+<div class="form-box">
+
+<form action="/apply" method="POST" enctype="multipart/form-data">
+
+
+<label>Full Name</label><br>
+<input type="text" name="fullname" required><br><br>
+
+<label>Aadhaar Number</label><br>
+<input type="text" name="aadhaar" maxlength="12" required><br><br>
+
+<label>Mobile Number</label><br>
+<input type="text" name="mobile" maxlength="10" required><br><br>
+
+<label>Address</label><br>
+<textarea name="address" required></textarea><br><br>
+
+<label>Select Assistance</label><br>
+<select name="service" required>
+    <option value="">Select</option>
+    <option value="PAN Card Assistance">PAN Card Assistance</option>
+    <option value="Aadhaar Assistance">Aadhaar Assistance</option>
+    <option value="PAN & Aadhaar Assistance">PAN & Aadhaar Assistance</option>
+</select>
+
+<br><br>
+
+<label>Upload Document</label><br>
+<input type="file" name="document" required><br><br>
+
+<button type="submit">Submit Request</button>
+
+
+</form>
+
+</div>
+
+</body>
+</html>
