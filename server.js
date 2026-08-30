@@ -1,11 +1,17 @@
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 const mongoose = require("mongoose");
 const multer = require("multer");
 const User = require("./models/user");
 const application = require("./models/application");
 const service = require("./models/service");
 const bcrypt = require("bcrypt");
+const uploadDir = path.join(__dirname, "uploads");
+
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "uploads/");
