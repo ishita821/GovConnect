@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
 const multer = require("multer");
-const User = require("./models/User");
+const User = require("./models/user");
 const application = require("./models/application");
 const service = require("./models/service");
 const bcrypt = require("bcrypt");
@@ -24,12 +24,12 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-mongoose.connect("mongodb://127.0.0.1:27017/govconnect")
+mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log("MongoDB Connected");
 })
 .catch((err) => {
-    console.log(err);
+    console.log("MongoDB connection error:", err);
 });
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -105,7 +105,7 @@ app.post("/login", async (req, res) => {
 
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.get("/logout", (req, res) => {
     req.session.destroy((err) => {
         if (err) {
